@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from 'react';
-import { deletePost, getPosts } from './api/PostApi';
+import { deletePost, getPosts, updatePost } from './api/PostApi';
 import './App.css'
 import PostCard from './allCards/PostCard';
 import { Button } from '../components/ui/button';
@@ -79,12 +79,33 @@ function App() {
     setBody('')
     setTitle('')
   }
-  console.log(selectedPost);
+
+
+  // Edit Method Action
+
+  const updatePostData = async () => {
+    const res = await updatePost(selectedPost.id, { title, body });
+    if (res.status === 200) {
+      const newPosts = posts.map((post) => {
+        if (post.id === selectedPost.id) {
+          return res.data
+        }
+        return post
+      })
+      setPosts(newPosts)
+      closeModal()
+    }
+  }
+  const handlePostUpdate = (e) => {
+    e.preventDefault();
+    updatePostData();
+    setIsOpenDialog(false)
+  }
 
 
   return (
     <section className='container mx-auto py-10'>
-      <div className='flex justify-between items-center mb-10'>
+      <div className='flex flex-col md:flex-row justify-between items-center mb-10'>
         <h1 className='text-3xl font-bold'>Posts: {posts.length}</h1>
         <CreatePostForm posts={posts} setPosts={setPosts} />
       </div>
@@ -117,7 +138,7 @@ function App() {
           </DialogHeader>
 
           {modalType === 'edit' && (
-            <form onSubmit={(e) => e.preventDefault()}>
+            <form onSubmit={handlePostUpdate}>
               <div className="grid gap-4 py-4">
                 <div className="flex items-center gap-4">
                   <label htmlFor="title" className="text-right">Title:</label>
@@ -144,27 +165,24 @@ function App() {
                   />
                 </div>
               </div>
+                <Button
+                  type="submit"
+                  variant="outline"
+                  className="bg-blue-700 w-fit"
+                >
+                  Save
+                </Button>
             </form>
           )}
 
           <DialogFooter className="sm:justify-start">
-            <DialogClose asChild>
-              <Button type="button" variant="secondary">Close</Button>
-            </DialogClose>
 
-            {modalType === 'edit' ?
-              <Button
-                type="submit"
-                variant="outline"
-                className="ml-3"
-              >
-                Save
-              </Button>
-              :
+
+            {modalType === 'delete' &&
               <Button
                 type="submit"
                 variant="destructive"
-                className="ml-3"
+                className=""
                 onClick={() => handleDeleteAction(selectedPost.id)}
               >
                 {reloadIcon && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
