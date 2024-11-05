@@ -18,7 +18,6 @@ const CreatePostForm = ({ posts, setPosts }) => {
 
     const addPostData = async () => {
         const res = await createPost(newPost);
-        console.log(res, "res");
 
         if (res.status === 201) {
             setPosts([...posts, res.data]);
@@ -34,7 +33,7 @@ const CreatePostForm = ({ posts, setPosts }) => {
     return (
         <>
             <form onSubmit={handleFormSubmit} 
-            className='flex items-center gap-5 w-[700px]
+            className='flex flex-col md:flex-row items-center gap-5 w-full md:w-[700px]
          bg-slate-300 px-3 py-2 rounded-lg'>
                 <input
                     className='w-full p-2 rounded-lg text-white'
