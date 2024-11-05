@@ -51,11 +51,11 @@ The goal of this project is to provide a simple, functional CRUD application tha
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/react-crud-project.git
+   git clone https://github.com/get-shrabon/axios-crud-operation-react.git
    ```
 2. Navigate to the project directory:
    ```bash
-   cd react-crud-project
+   cd axios-crud-operation-react
    ```
 3. Install dependencies:
    ```bash
@@ -70,7 +70,7 @@ The goal of this project is to provide a simple, functional CRUD application tha
 
 1. **API Base URL**: Create an `.env` file in the root directory and add the base URL for your REST API:
    ```plaintext
-   REACT_APP_API_BASE_URL="https://your-api-url.com/api"
+   REACT_APP_API_BASE_URL="https://jsonplaceholder.typicode.com/posts"
    ```
 2. **Axios Configuration**: Axios will use the environment variable for requests.
 
