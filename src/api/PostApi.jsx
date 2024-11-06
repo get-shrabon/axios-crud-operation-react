@@ -23,3 +23,4 @@ export const updatePost = (id, data) => {
 export const createPost = (data) => {
     return api.post("/posts", data)
 }
+
